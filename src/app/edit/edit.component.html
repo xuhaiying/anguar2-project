@@ -1,0 +1,26 @@
+<div class="thumbnail from-card">
+    <form class="form-horizontal" #deitForm="ngForm" (ngSubmit)="changePW(deitForm.value)">
+        <div class="breadcrumb">修改密码</div>
+        <div class="form-group" style="margin-top: 20px">
+            <label class="col-sm-3 control-label">原密码：</label>
+            <div class="col-sm-8 clean-padding">
+                <input name="old_pwd" type="password" class="form-control" placeholder="">
+            </div>
+        </div>
+        <div class="form-group" style="margin-top: 20px">
+            <label class="col-sm-3 control-label">新密码：</label>
+            <div class="col-sm-8 clean-padding">
+                <input name="new_pwd" type="password" class="form-control" placeholder="密码长度为6-20位">
+            </div>
+        </div>
+        <div class="form-group" style="margin-top: 20px">
+            <label class="col-sm-3 control-label">密码确认：</label>
+            <div class="col-sm-8 clean-padding">
+                <input name="renew_pwd" type="password" class="form-control" placeholder="须与新密码一致">
+            </div>
+        </div>
+        <div class="form-group text-center">
+            <button style="width: 45%" class="btn btn-primary" type="submit">提交</button>
+        </div>
+    </form>
+</div>

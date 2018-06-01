@@ -2,13 +2,52 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Myangular</title>
+  <title>到位分销商数据查询后台</title>
   <base href="/">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    #prel {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      margin: auto;
+      top:0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+    #prel span {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background-color: #999;;
+      border-radius: 50%;
+    }
+    #prel span:nth-child(1){
+      animation: cross-1 1.5s infinite linear;
+    }
+    #prel span:nth-child(2){
+      animation: cross-2 1.5s infinite linear;
+    }
+    @keyframes cross-1 {
+      0% {transform: translateX(0);opacity: 1;}
+      50% {transform: translateX(80px);opacity: 0.5;}
+      100% {transform: translateX(0);opacity: 1;}
+    }
+    @keyframes cross-2 {
+      0% {transform: translateX(80px);opacity: 1;}
+      50% {transform: translateX(0);opacity: 0.5;}
+      100% {transform: translateX(80px);opacity: 1;}
+    }
+  </style>
 </head>
 <body>
-  <app-root></app-root>
+  <app-root>
+      <div id="prel">
+        <span></span>
+        <span></span>
+      </div>
+  </app-root>
 </body>
 </html>

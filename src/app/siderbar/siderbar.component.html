@@ -1,0 +1,20 @@
+<nav class="sidebar" id="sidebar">
+  <ul class="nav nav-stacked nav-pills">
+    <li [class.active]="path === '/order'" (click)="path = '/order'">
+      <a [routerLink]="['/order']">
+        <i class="fa fa-clipboard"></i>订单明细</a>
+    </li>
+    <li [class.active]="path === '/statistics'" (click)="path = '/statistics'">
+      <a [routerLink]="['/statistics']">
+        <i class="fa fa-bar-chart"></i>数据统计</a>
+    </li>
+    <li [class.active]="path.indexOf('income')>-1" (click)="path = '/income/detail'">
+      <a [routerLink]="['/income/detail']">
+        <i class="fa fa-jpy" style="padding: 0 5px"></i>收入管理</a>
+    </li>
+    <li [class.active]="path === '/edit'" (click)="path = '/edit'">
+      <a [routerLink]="['/edit']">
+        <i class="fa fa-pencil fa-fw"></i>修改密码</a>
+    </li>
+  </ul>
+</nav>

@@ -1,0 +1,24 @@
+.sidebar{
+  position: fixed;
+  left:0;
+  background: #293038;
+  width:130px;
+  height: 100%;
+  border-right: 1px solid #e7e7e7;
+  padding: 20px 0 0;
+}
+.sidebar a {
+  display: block;
+  padding: 10px;
+  border-bottom: 1px solid #363b41;
+  text-decoration: none;
+  transition: background 1s;
+  color: #fff;
+}
+.sidebar i {
+  margin-right: 10px;
+  font-size: 16px;
+}
+.nav-pills > li {
+  line-height: 2;
+}

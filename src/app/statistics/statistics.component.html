@@ -1,0 +1,102 @@
+<div class="panel panel-default financial-management" style="margin-top: 15px;">
+  <div class="panel-heading">
+    <span class="panel-title">整体趋势</span>
+    <div class="pull-right">
+      <div class="pull-right" style="margin: -3px 10px;">
+        <button class="btn btn-sm btn-primary" type="button" (click)="getServiceStatistics()">搜索</button>
+      </div>
+      <div class="pull-right" style="margin-top:-5px;">
+        <app-datepicker-popup #mydatepicker></app-datepicker-popup>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body financial-content">
+    <div>
+      <canvas baseChart width="500" height="120" [chartType]="'bar'" [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
+        [legend]="true">
+      </canvas>
+    </div>
+  </div>
+</div>
+<div class="panel panel-default financial-management">
+  <div class="panel-heading">
+    <span class="panel-title">合计</span>
+  </div>
+  <div class="panel-body financial-content">
+    <div>
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+            <tr>
+                <th style="width:130px">合计</th>
+                <th>访问量</th>
+                <th>下单用户</th>
+                <th>付款订单量</th>
+                <th>付款金额</th>
+                <th>订单转化率</th>
+                <th>退款订单量</th>
+                <th>退款金额</th>
+                <th>优惠金额</th>
+                <th>成交金额</th>
+                <th>佣金收入</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>合计</td>
+                    <td>{{total.userCountSum}}</td>
+                    <td>{{total.userOrderCountSum}}</td>
+                    <td>{{total.orderCountSum}}</td>
+                    <td>{{total.paidCountSum | number:'.2-2'}}</td>
+                    <td>{{total.orderConversionRateSum | percent:'.1-2'}}</td>
+                    <td>{{total.returnCountSum}}</td>
+                    <td>{{total.returnBillSum | number:'.2-2'}}</td>
+                    <td>{{total.couponBillSum | number:'.2-2'}}</td>
+                    <td>{{total.clinchBillSum | number:'.2-2'}}</td>
+                    <td>{{total.commissionSum | number:'.2-2'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+  </div>
+</div>
+<div class="panel panel-default financial-management" style="margin-top: 15px;">
+  <div class="panel-heading">
+    <span class="panel-title">数据明细</span>
+  </div>
+  <div class="panel-body financial-content">
+    <div>
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr >
+                    <th style="width:130px">日期</th>
+                    <th>访问量</th>
+                    <th>下单用户</th>
+                    <th>付款订单量</th>
+                    <th>付款金额</th>
+                    <th>订单转化率</th>
+                    <th>退款订单量</th>
+                    <th>退款金额</th>
+                    <th>优惠金额</th>
+                    <th>成交金额</th>
+                    <th>佣金收入</th>
+                </tr>
+            </thead>
+            <tbody id="statisticsTr">
+                <tr *ngFor="let item of itemModel">
+                    <td>{{item.day}}</td>
+                    <td>{{item.userCount}}</td>
+                    <td>{{item.userOrderCount}}</td>
+                    <td>{{item.orderCount}}</td>
+                    <td>{{item.paidCount | number:'.2-2'}}</td>
+                    <td>{{item.orderConversionRate | percent:'.1-2'}}</td>
+                    <td>{{item.returnCount}}</td>
+                    <td>{{item.returnBill | number:'.2-2'}}</td>
+                    <td>{{item.couponBill | number:'.2-2'}}</td>
+                    <td>{{item.clinchBill | number:'.2-2'}}</td>
+                    <td>{{item.commission | number:'.2-2'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+  </div>
+</div>

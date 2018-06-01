@@ -1,0 +1,14 @@
+<div style="margin-top: 20px;">
+  <ul class="nav nav-pills">
+    <li [class.active]="path.indexOf('detail')>-1">
+      <a [routerLink]="['/income/detail']">收入明细</a>
+    </li>
+    <li [class.active]="path === '/income/deposit'">
+      <a [routerLink]="['/income/deposit']">提现</a>
+    </li>
+    <li [class.active]="path === '/income/setting'">
+      <a [routerLink]="['/income/setting']">账户设置</a>
+    </li>
+  </ul>
+</div>
+<router-outlet></router-outlet>

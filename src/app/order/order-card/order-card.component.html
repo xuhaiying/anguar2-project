@@ -1,0 +1,50 @@
+<div [class]="orderCardClassName">
+  <div class="order-content-list-top">
+    <span>下单时间：{{orderItem.createTime | date:'yyyy-MM-dd HH:mm'}}</span>
+    <span class="pull-right">订单号：{{orderItem.orderId}}</span>
+  </div>
+  <div class="order-content-list-info">
+    <div class="dashed-bottom">
+      <div class="row">
+        <div class="col-md-1">
+            <!-- <img *ngIf="orderItem.buyer.vip === '普通会员'" src="../../../assets/img/normal.png" width="15" height="15"/>
+            <img *ngIf="orderItem.buyer.vip === '青铜会员'" src="../../../assets/img/copper.png" width="15" height="15"/>
+            <img *ngIf="orderItem.buyer.vip === '白银会员'" src="../../../assets/img/silver.png" width="15" height="15"/>
+            <img *ngIf="orderItem.buyer.vip === '黄金会员'" src="../../../assets/img/gold.png" width="15" height="15"/>
+            <img *ngIf="orderItem.buyer.vip === '钻石会员'" src="../../../assets/img/diamond.png" width="15" height="15"/> -->
+            <span>{{orderItem.contactPerson}}</span>
+        </div>
+        <div class="col-md-2">{{orderItem.contactPersonPhone}}</div>
+        <div class="col-md-3">{{orderItem.address}}</div>
+        <div class="col-md-3">{{orderItem.appointTime | date:'yyyy-MM-dd HH:mm'}}</div>
+        <b class="col-md-1">¥{{orderItem.totalPrice | number: '.2-2'}}</b>
+        <div *ngIf="orderItem.statusId==='1'" class="col-md-2 text-right color-success">{{orderItem.statusDesc}}</div>
+        <div *ngIf="orderItem.statusId==='3'" class="col-md-2 text-right color-warning">{{orderItem.statusDesc}}</div>
+        <div *ngIf="orderItem.statusId==='5'" class="col-md-2 text-right color-default">{{orderItem.statusDesc}}</div>
+        <div *ngIf="orderItem.statusId==='4'|| orderItem.statusId==='11'|| orderItem.statusId==='13'" class="col-md-2 text-right color-danger">{{orderItem.statusDesc}}</div>
+        <div *ngIf="orderItem.statusId==='0'||orderItem.statusId==='2'|| orderItem.statusId==='12'" class="col-md-2 text-right color-primary">{{orderItem.statusDesc}}</div>
+        <div *ngIf="orderItem.statusId==='6'||orderItem.statusId==='7'||orderItem.statusId==='8'" class="col-md-2 text-right color-primary">{{orderItem.statusDesc}}</div>
+        <div *ngIf="orderItem.statusId==='9'||orderItem.statusId==='10'" class="col-md-2 text-right color-primary">{{orderItem.statusDesc}}</div>
+      </div>
+      <div *ngFor="let item of orderItem.items">
+        <img src="{{item.picUrl}}" width="30" height="30"/>
+        <span style="padding-left:10px;">{{item.name}}</span>
+        <span>×<b>{{item.quantity}}</b></span>
+        <span style="padding-left:20px;">{{item.price | number: '.2-2'}}元</span>
+      </div>
+    </div>
+    <div>
+      <!-- <span>用户备注： {{orderItem.note||"无"}}</span> -->
+      <span class="color-warning">{{orderItem.service.title}}</span>
+      <span class="pull-right">
+        <span >支付状态：</span>
+        <span *ngIf="orderItem.paid == 0" class="color-danger">未支付 </span>
+        <span *ngIf="orderItem.paid == 1" class="color-success">已支付 </span>
+        <span *ngIf="orderItem.paid == -1" class="color-success">已退款 </span>
+        <span style="margin-left: 10px;"> 在线支付{{orderItem.money | number: '.2-2'}}元</span>
+      </span>
+    </div>
+  </div>
+  <div>
+  </div>
+</div>

@@ -1,0 +1,62 @@
+<div class="account tabList from-card">
+  <div class="withdraw-information">
+    <div class="withdraw-information-inner">
+      <form class="form-horizontal" (ngSubmit)="withdrawSubmit()">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">收入情况</h3>
+          </div>
+          <div class="panel-body">
+            <div class="form-group" style="margin-top: 20px">
+              <label class="col-sm-3 control-label">待确认金额：</label>
+              <div class="col-sm-8" style="padding-top: 7px;">
+                {{accountData.totalPending | number: '.2-2'}}元
+              </div>
+            </div>
+            <div class="form-group" style="margin-top: 20px">
+              <label class="col-sm-3 control-label">可提现金额：</label>
+              <div class="col-sm-8" style="padding-top: 7px;">
+                {{accountData.totalBalance | number: '.2-2'}}元
+              </div>
+            </div>
+            <div class="form-group" style="margin-top: 20px">
+              <label class="col-sm-3 control-label">已提现金额：</label>
+              <div class="col-sm-8" style="padding-top: 7px;">
+                {{accountData.totalWithdraw | number: '.2-2'}}元
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">提现信息</h3>
+          </div>
+          <div class="panel-body">
+            <div class="form-group" style="margin-top: 20px">
+              <label class="col-sm-3 control-label">提现金额：</label>
+              <div class="col-sm-8">
+                <input name="bill" type="number" class="form-control" placeholder="单笔提现金额最少为100元，提现后余额不能低于100元" [(ngModel)]="bill">
+              </div>
+            </div>
+            <div class="form-group" style="margin-top: 20px">
+              <label class="col-sm-3 control-label">提现账户：</label>
+              <div *ngIf="accountType==='alipay'" class="col-sm-8">
+                  <div style="padding-top: 7px;">
+                      支付宝账户 {{accountData.alipayAccount}}
+                  </div>
+              </div>
+              <div *ngIf="accountType==='bank'" class="col-sm-8">
+                  <div style="padding-top: 7px;">
+                      银行账号 {{accountData.bankAccount}}
+                  </div>
+              </div>
+            </div>
+            <div class="form-group text-center">
+              <button class="btn btn-primary btn-width" type="submit" style="width: 45%">提交</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

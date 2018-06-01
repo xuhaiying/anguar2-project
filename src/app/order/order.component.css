@@ -1,0 +1,20 @@
+:host >>> .tooltip-inner {
+    line-height: 2;
+    background-color: #F9CC9D;
+    color: #000; 
+  }
+  :host >>> .tooltip.bottom .tooltip-arrow:before,
+  :host >>> .tooltip.bottom .tooltip-arrow {
+    border-bottom-color: #F9CC9D;
+  }
+.panel-footer {
+  padding: 0;
+}
+.order-card-title {
+  margin: 0;
+  padding: 10px 15px;
+  border-bottom: 1px solid #ddd;
+}
+.panel-heading{
+  overflow: hidden;
+}

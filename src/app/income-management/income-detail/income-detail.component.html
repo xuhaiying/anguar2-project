@@ -1,0 +1,219 @@
+<div class="financial tabList">
+  <div class="panel panel-default financial-management">
+    <div class="panel-heading">
+      <div class="panel-title clearfix">
+        <div class="pull-right" style="margin-left: 10px;">
+          <button class="btn btn-sm btn-primary" type="button" (click)="exporDaretList()">导出</button>
+        </div>
+        <div class="pull-right" style="margin-left: 10px;">
+          <button class="btn btn-sm btn-primary" type="button" (click)="getBalanceDetail()">查询</button>
+        </div>
+        <div class="pull-right" style="width: 70px;margin-left:10px;">
+          <ng-select style="font-size:14px;" #select [items]="financialTypeList" [(ngModel)]="typeseach" bindLabel="name">
+            <ng-template ng-header-tmp>
+              <input class="select-search" type="name" (input)="select.filter($event.target.value)" />
+            </ng-template>
+            <ng-template ng-notfound-tmp let-searchTerm="searchTerm">
+              <div class="ng-option disabled">
+                未找到"{{searchTerm}}"
+              </div>
+            </ng-template>
+          </ng-select>
+        </div>
+        <div class="pull-right">
+          <app-datepicker-popup #mydatepicker></app-datepicker-popup>
+        </div>
+        <div class="pull-right" style="width: 140px">
+          <ng-select style="font-size:14px;" #api [items]="financialSearchTypeList" [(ngModel)]="financialType" bindLabel="name">
+            <ng-template ng-header-tmp>
+              <input class="select-search" type="name" (input)="api.filter($event.target.value)" />
+            </ng-template>
+            <ng-template ng-notfound-tmp let-searchTerm="searchTerm">
+              <div class="ng-option disabled">
+                未找到"{{searchTerm}}"
+              </div>
+            </ng-template>
+          </ng-select>
+        </div>
+        <div class="pull-left">
+          <app-btn-group [btnArray]="btnArray" [active]="status"></app-btn-group>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body financial-content">
+      <div class="row" style="margin-bottom: 10px;">
+        <div class="col-md-4">
+          <span>
+            <strong class="text-danger">收入</strong>
+          </span>
+          <span>{{inMoney | number: '.2-2'}}元</span>
+          <span>{{inNum}}笔</span>
+        </div>
+        <div class="col-md-4" style="text-align: center;">
+          <span>
+            <strong class="text-success">支出收入</strong>
+          </span>
+          <span>{{outMoney | number: '.2-2'}}元</span>
+          <span>{{outNum}}笔</span>
+        </div>
+        <div class="col-md-4" style="padding-right:16px;text-align: right;">
+          <span>
+            <strong class="text-success">可提现金额</strong>
+          </span>
+          <span>{{balance}}元</span>
+          <button class="btn btn-sm btn-primary" style="padding: 3px 10px;" type="button" [routerLink]="['/income/deposit']">提现</button>
+        </div>
+      </div>
+      <table class="table table-bordered table-responsive">
+        <thead>
+          <tr>
+            <th style="width: 160px;">入账时间</th>
+            <th style="width:150px;">订单金额（元）</th>
+            <th style="width: 150px;">下单时间</th>
+            <th style="width: 100px;">财务类型</th>
+            <th style="width: 120px;">收支金额（元）</th>
+            <th>说明</th>
+            <th style="width: 120px;">账户余额（元）</th>
+            <th style="width: 100px;">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let financial of financialList">
+            <td>{{financial.balancetime | date:'yyyy-MM-dd HH:mm'}}</td>
+            <td *ngIf="financial.orderPrice != '0.00'">{{financial.orderPrice | number:'.2-2'}}</td>
+            <td *ngIf="financial.orderPrice == '0.00'"></td>
+            <td>{{financial.createtime | date:'yyyy-MM-dd HH:mm'}}</td>
+            <td>{{financial.type}}</td>
+            <td>{{financial.bill | number:'.2-2'}}</td>
+            <td>{{financial.note}}</td>
+            <td>{{financial.balance | number:'.2-2'}}</td>
+            <td>
+              <button class="btn btn-primary btn-sm" *ngIf="financial.orderId !=''" (click)="openModalWithComponent(financial)">详情</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="financialList && financialList.length === 0" class="text-center">没有相关订单！</div>
+    </div>
+    <div class="panel-footer">
+        <pagination [totalItems]="bigTotalItems" [itemsPerPage]="size" [maxSize]="maxSize" class="pagination-sm" [boundaryLinks]="true" (pageChanged)="pageChanged($event)"
+        [(ngModel)]="p" previousText="上一页" nextText="下一页" firstText="首页" lastText="尾页"></pagination>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isModalShown" [config]="{ show: true }" (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal" class="modal fade"
+  tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">详情</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered table-responsive">
+          <thead>
+            <tr>
+              <th>来源商家</th>
+              <th>订单金额</th>
+              <th>商家优惠</th>
+              <th>商家实收</th>
+              <th *ngIf="financial.type != '分成'">服务费</th>
+              <th>订单退款金额</th>
+              <th>我的实收净额</th>
+            </tr>
+          </thead>
+          <tbody [class]="orderCardClassName">
+            <tr>
+              <td>{{detail.serviceTitle}}</td>
+              <td>
+                <i class="fa fa-jpy"></i>{{detail.pay.total | number :'.2-2'}}</td>
+              <td>
+                <i class="fa fa-jpy"></i>{{detail.pay.shangjiaCoupon | number :'.2-2'}}</td>
+              <td>
+                <i class="fa fa-jpy"></i>{{detail.shangjiaIncome|| 0 | number :'.2-2'}}</td>
+              <td *ngIf="financial.type != '分成'">
+                <i class="fa fa-jpy"></i>{{detail.pay.fee | number :'.2-2'}}</td>
+              <td *ngIf="!detail.returnBill">无</td>
+              <td *ngIf="detail.returnBill">
+                <i class="fa fa-jpy"></i>{{detail.returnBill}}</td>
+              <td>
+                <i class="fa fa-jpy"></i>{{financial.bill}}</td>
+            </tr>
+            <tr class="order-content-list-top">
+              <td colspan="7">
+                <span class="pull-left">下单时间：{{detail.createtime | date:'yyyy-MM-dd HH:mm'}}</span>
+                <span class="pull-right">订单号：{{detail.orderId}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="7">
+                <div class="row order-card-title">
+                  <b class="col-md-1">联系人</b>
+                  <b class="col-md-2">联系电话</b>
+                  <b class="col-md-2">服务地址</b>
+                  <b class="col-md-2">预约时间</b>
+                  <b class="col-md-1">数量</b>
+                  <b class="col-md-2">订单金额</b>
+                  <b class="col-md-2">订单状态</b>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="7">
+                <div class="row order-card-title">
+                  <span class="col-md-1">{{detail.contactPerson}}</span>
+                  <b class="col-md-2">{{detail.buyerPhone}}</b>
+                  <span class="col-md-2">{{detail.address}}</span>
+                  <b class="col-md-2">{{detail.appointTime | date:'yyyy-MM-dd HH:mm'}}</b>
+                  <span class="col-md-1">{{quantity}}</span>
+                  <span class="col-md-2">{{detail.totalPrice | number:'.2-2' }}</span>
+                  <span *ngIf="detail.statusId==='1'" class="col-md-2 color-success">{{detail.buyerStatusDesc}}</span>
+                  <span *ngIf="detail.statusId==='3'" class="col-md-2 color-warning">{{detail.buyerStatusDesc}}</span>
+                  <span *ngIf="detail.statusId==='5'" class="col-md-2 color-default">{{detail.buyerStatusDesc}}</span>
+                  <span *ngIf="detail.statusId==='4'|| detail.statusId==='11'|| detail.statusId==='13'" class="col-md-2 color-danger">{{detail.buyerStatusDesc}}</span>
+                  <span *ngIf="detail.statusId==='0'||detail.statusId==='2' || detail.statusId==='12'" class="col-md-2 color-primary">{{detail.buyerStatusDesc}}</span>
+                  <span *ngIf="5<detail.statusId>11" class="col-md-2 color-primary">{{detail.buyerStatusDesc}}</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="7">
+                <span class="pull-left">用户备注： {{detail.note||"无"}}</span>
+                <span class="pull-right" style="margin-left: 15px;">
+                  <span *ngIf="detail.pay.bill">在线支付{{detail.pay.bill}}元</span>
+                  <span *ngIf="detail.appendOrder!=null" style="padding-left: 10px">补差价{{detail.appendOrder.bill}}元</span>
+                  <span *ngIf="detail.couponType!=null">+
+                    <span *ngIf="detail.couponType === 'daoway'">到位代金劵{{detail.coupon}}元</span>
+                    <span *ngIf="detail.couponType === 'shangjia'">商家代金劵{{detail.coupon}}元</span>
+                  </span>
+                </span>
+                <span class="pull-right">
+                  <span>支付状态：</span>
+                  <span *ngIf="detail.paid == 0" class="color-danger">未支付 </span>
+                  <span *ngIf="detail.paid == 1" class="color-success">已支付 </span>
+                  <span *ngIf="detail.paid == -1" class="color-success">已退款 </span>
+                </span>
+              </td>
+            </tr>
+            <tr *ngFor="let item of detail.items">
+              <td colspan="7" style="text-align: left">
+                <span>
+                  <img src="{{item.picUrl}}" width="30" height="30">
+                </span>
+                <span>{{item.name}}</span>
+                <span>数量：
+                  <span class="color-or">{{item.quantity}}</span>
+                </span>
+                <span>单价：{{item.price}}元</span>
+                <span>总价：{{item.price * item.quantity | number:'.2-2'}}元</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

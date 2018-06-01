@@ -1,0 +1,7 @@
+.from-card {
+    position: relative;
+    width: 50%;
+    min-width: 500px;
+    margin: auto;
+    top: 100px;
+}

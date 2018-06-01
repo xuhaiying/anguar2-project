@@ -1,0 +1,44 @@
+<div class="financial tabList" style="margin-top:10px;">
+  <div class="panel panel-default financial-management">
+    <div class="panel-heading">
+      <div class="panel-title">
+        <div style="display: inline-block;">
+          <div class="btn-group btn-group-sm">
+            <app-btn-group [btnArray]="btnArray" [active]="status || 'ALL'"></app-btn-group>
+          </div>
+        </div>
+        <div class="pull-right">
+          <div style="width:160px;margin: 2px 0 2px 10px;" class="pull-right input-group input-group-sm">
+            <input type="text" class="form-control ng-pristine ng-untouched ng-valid" [(ngModel)]="searchText" placeholder="电话号、昵称">
+            <span class="input-group-btn">
+              <button class="btn btn-primary" (click)="searchEvent('searchText')">搜索</button>
+            </span>
+          </div>
+          <div class="pull-right" style="margin-left: 10px;">
+            <button class="btn btn-sm btn-primary" type="button" (click)="searchEvent('searchDate')">查询</button>
+            <button class="btn btn-sm btn-primary" type="button" (click)="exporDaretList()">导出</button>
+          </div>
+          <div class="pull-right">
+            <app-datepicker-popup #mydatepicker></app-datepicker-popup>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row order-card-title">
+      <b class="col-md-1">联系人</b>
+      <b class="col-md-2">联系电话</b>
+      <b class="col-md-3">服务地址</b>
+      <b class="col-md-3">预约时间</b>
+      <b class="col-md-1">订单金额</b>
+      <b class="col-md-2 text-right">订单状态</b>
+    </div>
+    <div class="panel-body financial-content">
+      <div *ngIf="orderArray && orderArray.length === 0" class="text-center">没有相关订单！</div>
+      <app-order-card *ngFor="let item of orderArray" [orderItem]="item"></app-order-card>
+    </div>
+    <div class="panel-footer">
+      <pagination [totalItems]="bigTotalItems" [itemsPerPage]="size" [maxSize]="maxSize" class="pagination-sm" [boundaryLinks]="true" (pageChanged)="pageChanged($event)"
+        [(ngModel)]="p" previousText="上一页" nextText="下一页" firstText="首页" lastText="尾页"></pagination>
+    </div>
+  </div>
+</div>

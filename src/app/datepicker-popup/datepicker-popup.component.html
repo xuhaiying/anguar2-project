@@ -1,0 +1,26 @@
+<form class="form-inline">
+  <div class="form-group">
+    <div class="input-group pull-left" style="width: 180px;margin-left: 10px;">
+      <span class="input-group-addon">从</span>
+      <input name="startTime" placeholder="开始日期" type="text" class="form-control" bsDatepicker #dp="bsDatepicker"
+             [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-dark-blue' }"
+             [(ngModel)]="startTime" [outsideClick]="true">
+      <span class="input-group-btn">
+        <button class="btn btn-default" (click)="dp.show()" type="button">
+          <i class="fa fa-calendar"></i>
+        </button>
+      </span>
+    </div>
+    <div class="input-group pull-left" style="width: 180px;margin-left: 10px;">
+      <span class="input-group-addon">到</span>
+      <input name="endTime" placeholder="结束日期" type="text" class="form-control" bsDatepicker #dp2="bsDatepicker"
+             [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-dark-blue' }"
+             [(ngModel)]="endTime" [outsideClick]="true">
+      <span class="input-group-btn">
+        <button class="btn btn-default" (click)="dp2.show()" type="button">
+          <i class="fa fa-calendar"></i>
+        </button>
+      </span>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,29 @@
+
+  <div class="container">
+    <div class="login">
+      <div class="content">
+        <h2>分销商数据查询后台</h2>
+        <form>
+          <div class="input-group">
+            <span class="input-group-addon icon-1"><i class="fa fa-user"></i></span>
+            <input name="login-name" class="form-control input-bottom" [(ngModel)]="user_name" type="text" placeholder="输入昵称或手机号"/>
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon icon-2"><i class="fa fa-lock"></i></span>
+            <input name="login-password" class="form-control input-top" [(ngModel)]="password" type="password" placeholder="输入密码"/>
+          </div>
+          <div class="alert alert-danger alert-dismissible" role="alert" *ngIf="message" style="margin: 15px 0 0 0;">
+            <button type="button" class="close" (click)="closeAlert()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{message}}
+        </div>
+        </form>
+      </div>
+      <button class="btn btn-primary btn-lg btn-block" (click)="login()">登录</button>
+      <!-- <div style="padding: 20px;">
+        <a class="pull-left" ng-href="#/forgetpwd" href="#/forgetpwd">忘记密码</a>
+        <a class="pull-right" href="http://www.daoway.com/information" target="_blank">注册</a>
+      </div> -->
+    </div>
+  </div>
